@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nodejs-express
-        image: phann123/nodejs-express-app:latest0620
+        image: phann123/nodejs-express-app:latest
         ports:
         - containerPort: 3000
         volumeMounts:
@@ -24,31 +24,17 @@ spec:
       volumes:
       - name: nodejs-app-source
         persistentVolumeClaim:
-            claimName: nodejs-pvc  # Name of the PVC created earlier
-
+          claimName: nodejs-pvc  # Name of the PVC created earlier
 
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nodejs-pv
-spec:
-  capacity:
-    storage: 500Mb  # Adjust size as needed
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce  # Access mode
-  persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: /path/to/your/local/directory  # Path on your local machine
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nodejs-pvc
+  namespace: learn-k8s
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 500Mb  # Requested storage size, should match or be less than PV
+      storage: 200Mi  # Requested storage size, should match or be less than PV

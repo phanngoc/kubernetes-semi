@@ -49,7 +49,7 @@ kubectl get pods -n learn-k8s
 kubectl get pods --show-labels
 
 ## Access the pod by exec into the pod
-kubectl exec -it nginxwebserver-74d8995487-bbcq8 -n learn-k8s -- /bin/sh
+kubectl exec -it nodejs-express-deployment-654d5dbdc6-7tbjh -n learn-k8s -- /bin/sh
 
 ## Delete all pods
 kubectl delete pods --all -n learn-k8s
@@ -105,3 +105,7 @@ kubectl delete pvc --all -n learn-k8s
 kubectl rollout restart -n learn-k8s deployment nginxwebserver
 
 minikube service nodejs-express -n learn-k8s --url
+
+## Mount host directory to minikube.
+
+minikube mount /Users/ngocp/Documents/projects/kubernete/app:/mnt/data/nodejs

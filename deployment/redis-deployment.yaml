@@ -18,18 +18,25 @@ spec:
       containers:
       - image: redis
         imagePullPolicy: Always
-        name: redis
+        name: redis-master
         ports:
-        - containerPort: 6379  # Corrected port to default Redis port
-          protocol: TCP
+          - containerPort: 6379
         volumeMounts:
-        - name: redis-data
-          mountPath: /data  # Mounting the volume at /data where Redis stores data
+          - name: redis-data
+            mountPath: /data
+      # - image: redis
+      #   imagePullPolicy: Always
+      #   name: redis-slave
+      #   command: ["redis-server", "--slaveof", "redis-master", "6379"]
+      #   volumeMounts:
+      #     - name: redis-data
+      #       mountPath: /data
       volumes:
-      - name: redis-data
-        persistentVolumeClaim:
-          claimName: redis-pvc
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-pvc  # Name of the PVC created earlier
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -40,4 +47,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 100Mi  # Requested storage size, should match or be less than PV

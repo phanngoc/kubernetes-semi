@@ -10,7 +10,7 @@ kubectl expose replicaset nginxwebserver --port 80
 
 kubectl get rs
 
-kubectl get svc
+kubectl get svc -n learn-k8s
 curl http://localhost:80
 
 kubectl scale replicaset nginxwebserver --replicas=5
@@ -49,7 +49,7 @@ kubectl get pods -n learn-k8s
 kubectl get pods --show-labels
 
 ## Access the pod by exec into the pod
-kubectl exec -it nginxwebserver-74d8995487-bbcq8 -n learn-k8s -- /bin/sh
+kubectl exec -it nodejs-express-deployment-654d5dbdc6-7tbjh -n learn-k8s -- /bin/sh
 
 ## Delete all pods
 kubectl delete pods --all -n learn-k8s
@@ -70,9 +70,13 @@ kubectl get all -n learn-k8s
 ## Host local obstack
 https://minikube.orb.localp/
 
-kubectl apply -k .
 
+## Apply resources
 kubectl apply -f deployment
+kubectl apply -f service
+kubectl apply -f configmap
+kubectl apply -f pv
+
 
 ## Get deployments
 kubectl get deployments
@@ -95,6 +99,20 @@ kubectl delete configmap nginx-config -n learn-k8s
 kubectl delete services --all --namespace learn-k8s
 kubectl delete deployment --all -n learn-k8s
 kubectl delete pods --all -n learn-k8s
+kubectl delete pvc --all -n learn-k8s
 
 ## Restart deployment
+- Restart a specific deployment.
 kubectl rollout restart -n learn-k8s deployment nginxwebserver
+
+- Restart all deployments.
+kubectl rollout restart -n learn-k8s deployment
+
+minikube service nodejs-express -n learn-k8s --url
+
+## Mount host directory to minikube.
+
+minikube mount /Users/ngocp/Documents/projects/kubernete/app:/mnt/data/nodejs
+
+## Access service in minikube
+minikube service nginx-service --url -n learn-k8s

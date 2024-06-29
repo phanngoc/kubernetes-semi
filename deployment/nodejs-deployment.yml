@@ -18,14 +18,25 @@ spec:
         image: phann123/nodejs-express-app:latest
         ports:
         - containerPort: 3000
-        command: [ "sleep", "3600" ]
-        volumeMounts:
-          - name: nodejs-app-source
-            mountPath: /usr/src/app
-      volumes:
-      - name: nodejs-app-source
-        persistentVolumeClaim:
-          claimName: nodejs-pvc  # Name of the PVC created earlier
+        env:
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: nodejs-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: nodejs-config
+              key: REDIS_PORT
+        # command: [ "sleep", "3600" ]
+      #   volumeMounts:
+      #     - name: nodejs-app-source
+      #       mountPath: /usr/src/app
+      # volumes:
+      # - name: nodejs-app-source
+      #   persistentVolumeClaim:
+      #     claimName: nodejs-pvc  # Name of the PVC created earlier
 
 ---
 apiVersion: v1

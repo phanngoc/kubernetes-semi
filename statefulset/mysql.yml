@@ -1,0 +1,44 @@
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: mysql
+#   labels:
+#     app: wordpress
+# spec:
+#   selector:
+#     matchLabels:
+#       tier: mysql
+#   serviceName: "mysql"
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: wordpress
+#         tier: mysql
+#     spec:
+#       containers:
+#       - name: mysql
+#         image: mysql:5.6
+#         env:
+#         - name: MYSQL_ROOT_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: mysql-pass
+#               key: password
+#         livenessProbe:
+#           tcpSocket:
+#             port: 3306
+#         ports:
+#         - containerPort: 3306
+#           name: mysql
+#         volumeMounts:
+#         - name: mysql-persistent-storage
+#           mountPath: /var/lib/mysql
+#   volumeClaimTemplates:
+#   - metadata:
+#       name: mysql-persistent-storage
+#     spec:
+#       accessModes: [ "ReadWriteOnce" ]
+#       resources:
+#         requests:
+#           storage: 1Gi

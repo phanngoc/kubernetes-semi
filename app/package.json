@@ -1,12 +1,16 @@
 {
-    "name": "nodejs-express-app",
-    "version": "1.0.0",
-    "description": "A simple Node.js Express application",
-    "main": "app.js",
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "express": "^4.17.1"
-    }
+  "name": "nodejs-express-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js Express application",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "connect-redis": "^7.1.1",
+    "express": "^4.17.1",
+    "express-session": "^1.18.0",
+    "redis": "^4.6.14"
+  }
 }

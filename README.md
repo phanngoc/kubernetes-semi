@@ -102,10 +102,18 @@ kubectl delete pods --all -n learn-k8s
 kubectl delete pvc --all -n learn-k8s
 
 ## Restart deployment
+- Restart a specific deployment.
 kubectl rollout restart -n learn-k8s deployment nginxwebserver
+
+- Restart all deployments.
+kubectl rollout restart -n learn-k8s deployment
 
 minikube service nodejs-express -n learn-k8s --url
 
 ## Mount host directory to minikube.
 
 minikube mount /Users/ngocp/Documents/projects/kubernete/app:/mnt/data/nodejs
+
+## Access service in minikube
+  
+minikube service nginx-service --url -n learn-k8s

@@ -31,27 +31,3 @@ spec:
           # items:
           # - key: nginx.conf
           #   path: nginx.conf
----
-
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: nginx-ingress
-#   namespace: learn-k8s
-#   annotations:
-#     # Use nginx as the ingress controller
-#     spec.ingressClassName: "nginx"
-#     # Optional: if you're using SSL/TLS
-#     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-# spec:
-#   rules:
-#   - host: "localhost.ttt"
-#     http:
-#       paths:
-#       - path: /
-#         pathType: Prefix
-#         backend:
-#           service:
-#             name: nginx-service
-#             port:
-#               number: 80

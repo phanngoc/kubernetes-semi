@@ -4,21 +4,8 @@ metadata:
   name: redis-cluster
   namespace: learn-k8s
 spec:
-  serviceName: redis-cluster-service
+  serviceName: redis-service
   replicas: 6
   selector:
-	matchLabels:
-  	app: redis-cluster
-
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: redis-cluster
-  namespace: redis-namespace
-spec:
-  serviceName: redis-cluster-service
-  replicas: 9
-  selector:
-	matchLabels:
-  	app: redis-cluster
+    matchLabels:
+      app: redis-cluster

@@ -115,4 +115,5 @@ minikube service nodejs-express -n learn-k8s --url
 minikube mount /Users/ngocp/Documents/projects/kubernete/app:/mnt/data/nodejs
 
 ## Access service in minikube
+  
 minikube service nginx-service --url -n learn-k8s

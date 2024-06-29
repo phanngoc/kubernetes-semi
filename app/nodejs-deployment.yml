@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-express-deployment
+  namespace: learn-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-express
+  template:
+    metadata:
+      labels:
+        app: nodejs-express
+    spec:
+      containers:
+      - name: nodejs-express
+        image: phann123/nodejs-express-app:latest
+        ports:
+        - containerPort: 3000
+        command: [ "sleep", "3600" ]
+        volumeMounts:
+          - name: nodejs-app-source
+            mountPath: /usr/src/app
+      volumes:
+      - name: nodejs-app-source
+        persistentVolumeClaim:
+          claimName: nodejs-pvc  # Name of the PVC created earlier
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodejs-pvc
+  namespace: learn-k8s
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Mi  # Requested storage size, should match or be less than PV

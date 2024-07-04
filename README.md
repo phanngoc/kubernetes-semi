@@ -100,6 +100,7 @@ kubectl delete services --all --namespace learn-k8s
 kubectl delete deployment --all -n learn-k8s
 kubectl delete pods --all -n learn-k8s
 kubectl delete pvc --all -n learn-k8s
+kubectl delete statefulset --all -n learn-k8s
 
 ## Restart deployment
 - Restart a specific deployment.
@@ -117,3 +118,42 @@ minikube mount /Users/ngocp/Documents/projects/kubernete/app:/mnt/data/nodejs
 ## Access service in minikube
   
 minikube service nginx-service --url -n learn-k8s
+
+## Restart statefulset
+kubectl rollout restart statefulset redis-slave -n learn-k8s
+kubectl rollout restart statefulset redis-master -n learn-k8s
+
+
+## Create a redis cluster
+kubectl exec -it redis-master-0 -n learn-k8s -- redis-cli --cluster create \
+  127.0.0.1:6379 \
+  redis-master-1.redis-master.learn-k8s.svc.cluster.local:6379 \
+  redis-master-2.redis-master.learn-k8s.svc.cluster.local:6379 \
+  redis-slave-0.redis-slave.learn-k8s.svc.cluster.local:6379 \
+  redis-slave-1.redis-slave.learn-k8s.svc.cluster.local:6379 \
+  redis-slave-2.redis-slave.learn-k8s.svc.cluster.local:6379 \
+  --cluster-replicas 1
+  
+### Check cluster status.
+
+127.0.0.1:6379> CONFIG GET *cluster*
+ 1) "cluster-require-full-coverage"
+ 2) "yes"
+ 3) "cluster-replica-no-failover"
+ 4) "no"
+ 5) "cluster-slave-no-failover"
+ 6) "no"
+ 7) "cluster-enabled"
+ 8) "no"
+ 9) "cluster-allow-reads-when-down"
+1)  "no"
+2)  "cluster-announce-ip"
+3)  ""
+4)  "cluster-replica-validity-factor"
+5)  "10"
+6)  "cluster-slave-validity-factor"
+7)  "10"
+8)  "cluster-migration-barrier"
+9)  "1"
+10) "cluster-announce-bus-port"
+11) "0"

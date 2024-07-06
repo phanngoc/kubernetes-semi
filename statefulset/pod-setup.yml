@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-setup-redis-cluster
+  namespace: learn-k8s
+spec:
+  containers:
+  - name: setup-redis-cluster
+    image: redis:6.0-alpine
+    command: ["/bin/sh", "/etc/config/bootstrap.sh"] 
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config # Mount the ConfigMap here
+  volumes:
+  - name: config-volume
+    configMap:
+      name: redis-config

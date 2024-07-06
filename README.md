@@ -54,6 +54,8 @@ kubectl exec -it nodejs-express-deployment-654d5dbdc6-7tbjh -n learn-k8s -- /bin
 ## Delete all pods
 kubectl delete pods --all -n learn-k8s
 
+kubectl delete -n learn-k8s pod pod-setup-redis-cluster
+
 ## Get logs
 kubectl logs <pod_name> -n <namespace>
 
